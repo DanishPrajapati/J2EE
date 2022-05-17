@@ -1,0 +1,52 @@
+//Execution of DML SQL Query or DML SQL Statement 
+
+
+
+package org.jspider.j2ee;
+import java.sql.*;
+
+public class DatabaseCreation {
+	public static void main(String[] args)
+	{
+		Connection con=null;
+		Statement stmt=null;
+		String qry="delete from btm.student where Name='Anila'";
+		String qry1="insert into btm.student values (6,'Anila',69.69)";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver class loaded and registered");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:6969?user=root&password=admin");
+			System.out.println("Connection established with Database Server");
+			stmt=con.createStatement();
+			System.out.println("Platform Created");
+			stmt.executeUpdate(qry);
+			stmt.executeUpdate(qry1);
+			System.out.println("Data Inserted");
+		}catch(ClassNotFoundException | SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if(stmt!=null)
+			{
+				try {
+					stmt.close();
+				}catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+			if(con!=null)
+			{
+				try {
+					con.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("Closed all costly Resources");
+		}
+	}
+
+}
